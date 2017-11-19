@@ -1,1 +1,1 @@
-# installer
+# WPGlue Installer

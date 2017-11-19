@@ -1,0 +1,19 @@
+{
+	"plugin_name": "",
+	"plugin_slug": "",
+    "plugin_text_domain": "",
+    "plugin_version": "",
+    "plugin_description": "",
+    "plugin_uri": "",
+    "plugin_license": "",
+    "author_name": "",
+    "author_email": "",
+    "author_uri": "",
+    "autoload": {
+		"namespace": "",
+		"mapping": {
+			"App": "app",
+			"Framework": "framework"
+		}
+	}
+}

@@ -22,7 +22,7 @@ class NewCommand extends Command
 
     protected $config = array();
 
-    protected $oldNamespace = 'Glue';
+    protected $oldNamespace = 'GlueNamespace';
 
     protected $questions = array(
         'plugin_name' => 'Plugin Name',
@@ -298,7 +298,7 @@ class NewCommand extends Command
         
         $fileSystem->remove($from);
 
-        if ($fileSystem->exists($mainFile = $to.'/glue.php')) {
+        if ($fileSystem->exists($mainFile = $to.'/index.php')) {
             $fileSystem->rename($mainFile, $to.'/'.$this->config['plugin_slug'].'.php');
 
             // TODO: Update main plugin file's doc blocks

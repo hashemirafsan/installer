@@ -8,8 +8,5 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 }
 
 $app = new Symfony\Component\Console\Application('Glue Installer', '1.0.0');
-$app->add(new Glue\Installer\Console\InitCommand);
-$app->add(new Glue\Installer\Console\InstallCommand);
-$app->add(new Glue\Installer\Console\NamespaceCommand);
-
+$app->add(new Glue\Installer\Console\NewCommand);
 $app->run();

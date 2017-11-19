@@ -32,7 +32,6 @@ class NewCommand extends Command
         'plugin_license' => 'Plugin License',
         'plugin_text_domain' => 'Plugin Text Domain',
         'author_name' => 'Author Name',
-        'author_email' => 'Author Email',
         'author_uri' => 'Author URI',
         'namespace' => 'Plugin Namespace',
     );
@@ -76,7 +75,6 @@ class NewCommand extends Command
         $this->config['plugin_license'] = $this->getPluginLicense($input, $output, $helper);
         
         $this->config['author_name'] = $this->getPluginAuthorName($input, $output, $helper);
-        $this->config['author_email'] = $this->getPluginAuthorEmail($input, $output, $helper);
         $this->config['author_uri'] = $this->getPluginAuthorUri($input, $output, $helper);
 
         $this->config['namespace'] = $this->getPluginNamespace($input, $output, $helper);
@@ -139,12 +137,6 @@ class NewCommand extends Command
     protected function getPluginAuthorName($input, $output, $helper)
     {
         $question = new Question('Author Name: ', false);
-        return $helper->ask($input, $output, $question);
-    }
-
-    protected function getPluginAuthorEmail($input, $output, $helper)
-    {
-        $question = new Question('Author Email: ', false);
         return $helper->ask($input, $output, $question);
     }
 
@@ -299,10 +291,24 @@ class NewCommand extends Command
         $fileSystem->remove($from);
 
         if ($fileSystem->exists($mainFile = $to.'/index.php')) {
-            $fileSystem->rename($mainFile, $to.'/'.$this->config['plugin_slug'].'.php');
+            $content = file_get_contents($mainFile);
+            $docBlocks = array(
+                '[Plugin Name]', '[Description]', '[Version]', '[Author]',
+                '[Author URI]', '[Plugin URI]', '[License]', '[Text Domain]',
+            );
+            $content = str_replace($docBlocks, array(
+                $this->config['plugin_name'],
+                $this->config['plugin_description'],
+                $this->config['plugin_version'],
+                $this->config['author_name'],
+                $this->config['author_uri'],
+                $this->config['plugin_uri'],
+                $this->config['plugin_license'],
+                $this->config['plugin_text_domain'],
+            ), $content);
+            file_put_contents($mainFile, $content);
 
-            // TODO: Update main plugin file's doc blocks
-            
+            $fileSystem->rename($mainFile, $to.'/'.$this->config['plugin_slug'].'.php');
         }
     }
 

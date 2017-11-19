@@ -290,7 +290,7 @@ class NewCommand extends Command
         
         $fileSystem->remove($from);
 
-        if ($fileSystem->exists($mainFile = $to.'/index.php')) {
+        if ($fileSystem->exists($mainFile = $to.'/main.php')) {
             $content = file_get_contents($mainFile);
             $docBlocks = array(
                 '[Plugin Name]', '[Description]', '[Version]', '[Author]',

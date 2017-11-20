@@ -26,21 +26,14 @@ class NewCommand extends Command
 
     protected $questions = array(
         'plugin_name' => 'Plugin Name',
-        'plugin_slug' => 'Plugin Slug',
-        'plugin_text_domain' => 'Plugin Text Domain',
         'plugin_version' => 'Plugin Version',
         'plugin_description' => 'Plugin description',
         'plugin_uri' => 'Plugin URI',
         'plugin_license' => 'Plugin License',
+        'plugin_text_domain' => 'Plugin Text Domain',
         'author_name' => 'Author Name',
         'author_uri' => 'Author URI',
-        'autoload': array(
-            'namespace': 'Plugin Namespace',
-            'mapping': array(
-                'App': 'app',
-                'Framework': 'framework'
-            )
-        )
+        'namespace' => 'Plugin Namespace',
     );
 
     /**
@@ -189,7 +182,7 @@ class NewCommand extends Command
             mkdir($this->path, 0777);
         }
 
-        $glueJson = [];
+        $glueJson = json_decode($this->getGlueJson(), true);
         foreach ($this->config as $key => $value) {
             if (!in_array($key, ['namespace', 'directory'])) {
                 $glueJson[$key] = (string) $value;
@@ -198,6 +191,29 @@ class NewCommand extends Command
 
         $glueJson['autoload']['namespace'] = $this->config['namespace'];
         file_put_contents($file, json_encode($glueJson, JSON_PRETTY_PRINT));
+    }
+
+    protected function getGlueJson()
+    {
+        return '{
+            "plugin_name": "",
+            "plugin_slug": "",
+            "plugin_text_domain": "",
+            "plugin_version": "",
+            "plugin_description": "",
+            "plugin_uri": "",
+            "plugin_license": "",
+            "author_name": "",
+            "author_email": "",
+            "author_uri": "",
+            "autoload": {
+                "namespace": "",
+                "mapping": {
+                    "App": "app",
+                    "Framework": "framework"
+                }
+            }
+        }';
     }
 
     protected function installApplication($input, $output)

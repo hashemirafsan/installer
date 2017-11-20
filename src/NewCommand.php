@@ -26,14 +26,21 @@ class NewCommand extends Command
 
     protected $questions = array(
         'plugin_name' => 'Plugin Name',
+        'plugin_slug' => 'Plugin Slug',
+        'plugin_text_domain' => 'Plugin Text Domain',
         'plugin_version' => 'Plugin Version',
         'plugin_description' => 'Plugin description',
         'plugin_uri' => 'Plugin URI',
         'plugin_license' => 'Plugin License',
-        'plugin_text_domain' => 'Plugin Text Domain',
         'author_name' => 'Author Name',
         'author_uri' => 'Author URI',
-        'namespace' => 'Plugin Namespace',
+        'autoload': array(
+            'namespace': 'Plugin Namespace',
+            'mapping': array(
+                'App': 'app',
+                'Framework': 'framework'
+            )
+        )
     );
 
     /**
@@ -182,7 +189,7 @@ class NewCommand extends Command
             mkdir($this->path, 0777);
         }
 
-        $glueJson = json_decode(file_get_contents(getcwd().'/src/glue.json'), true);
+        $glueJson = [];
         foreach ($this->config as $key => $value) {
             if (!in_array($key, ['namespace', 'directory'])) {
                 $glueJson[$key] = (string) $value;

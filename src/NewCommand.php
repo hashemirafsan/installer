@@ -85,7 +85,7 @@ class NewCommand extends Command
         }
 
         $confirm = $helper->ask($input, $output, new ConfirmationQuestion(
-            'Continue with this configuration? (y/n): ', false
+            'Continue with this configuration? (y/n): ', true
         ));
 
         if ($confirm) {
